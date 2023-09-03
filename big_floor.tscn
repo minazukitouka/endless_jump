@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://csgejl6r1vijo"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_epwd3"]
+
+[node name="BigFloor" type="StaticBody2D"]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_epwd3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -589.0
+offset_right = 586.0
+offset_bottom = 11.0
+color = Color(0.211765, 0.380392, 1, 1)

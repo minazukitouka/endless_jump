@@ -1,0 +1,110 @@
+[gd_scene load_steps=10 format=3 uid="uid://ypgle3x3xtt"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_lobwy"]
+[ext_resource type="PackedScene" uid="uid://c2tx280p7qwyj" path="res://player.tscn" id="1_spt8p"]
+[ext_resource type="PackedScene" uid="uid://csgejl6r1vijo" path="res://big_floor.tscn" id="2_5d18q"]
+[ext_resource type="PackedScene" uid="uid://dn3jfn4ev65os" path="res://spikes.tscn" id="3_u5r7o"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_g57d2"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_4p6sj"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t5toc"]
+size = Vector2(1152, 40)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bhy1d"]
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_0xdrb"]
+font_size = 100
+font_color = Color(1, 0, 0, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 1, 0, 1)
+shadow_offset = Vector2(5, 5)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lobwy")
+scroll_speed = -100.0
+
+[node name="InitialFloor" parent="." instance=ExtResource("2_5d18q")]
+position = Vector2(575, 573)
+
+[node name="Boundary" type="StaticBody2D" parent="."]
+
+[node name="Left" type="CollisionShape2D" parent="Boundary"]
+shape = SubResource("WorldBoundaryShape2D_g57d2")
+
+[node name="Right" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(1152, 0)
+shape = SubResource("WorldBoundaryShape2D_4p6sj")
+
+[node name="Player" parent="." instance=ExtResource("1_spt8p")]
+position = Vector2(66, 526)
+
+[node name="Floors" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="BigFloor" parent="Camera2D" instance=ExtResource("2_5d18q")]
+position = Vector2(576, 645)
+
+[node name="BigCeil" parent="Camera2D" instance=ExtResource("2_5d18q")]
+position = Vector2(575, 0)
+rotation = -3.14159
+
+[node name="Spikes2" parent="Camera2D" instance=ExtResource("3_u5r7o")]
+position = Vector2(576, 40)
+spikes_count = 50
+
+[node name="CollisionShape2D" parent="Camera2D/Spikes2" index="0"]
+shape = SubResource("RectangleShape2D_t5toc")
+
+[node name="Spikes3" parent="Camera2D" instance=ExtResource("3_u5r7o")]
+position = Vector2(576, 645)
+spikes_count = 50
+
+[node name="CollisionShape2D" parent="Camera2D/Spikes3" index="0"]
+shape = SubResource("RectangleShape2D_t5toc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Life" type="Label" parent="CanvasLayer"]
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 51.0
+offset_bottom = 74.0
+text = "10000/10000"
+label_settings = SubResource("LabelSettings_bhy1d")
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+offset_left = 892.0
+offset_top = 50.0
+offset_right = 1141.0
+offset_bottom = 108.0
+text = "0"
+label_settings = SubResource("LabelSettings_bhy1d")
+horizontal_alignment = 2
+
+[node name="GameOver" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_0xdrb")
+
+[editable path="Camera2D/Spikes2"]
+[editable path="Camera2D/Spikes3"]
